@@ -11,6 +11,9 @@
         android:theme="@style/Theme.CryptoApp"
         tools:targetApi="31">
         <activity
+            android:name=".presentation.MoreInfoActivity"
+            android:exported="false" />
+        <activity
             android:name=".presentation.CryptoCardView"
             android:exported="false" />
         <activity
