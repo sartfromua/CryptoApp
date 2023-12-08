@@ -6,7 +6,7 @@ import com.example.cryptoapp.domain.CryptoCardsRepository
 class RemoveCryptoCard (
     private var repository: CryptoCardsRepository
 ) {
-    fun removeCryptoCard(cryptoCard: CryptoCard){
+    suspend fun removeCryptoCard(cryptoCard: CryptoCard){
         repository.removeCryptoCard(cryptoCard)
     }
 }

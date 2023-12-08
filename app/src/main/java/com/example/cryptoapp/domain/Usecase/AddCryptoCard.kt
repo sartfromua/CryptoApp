@@ -5,7 +5,7 @@ import com.example.cryptoapp.domain.CryptoCardsRepository
 
 class AddCryptoCard (
     private var repository: CryptoCardsRepository) {
-    fun addCryptoCard(cryptoCard: CryptoCard){
+    suspend fun addCryptoCard(cryptoCard: CryptoCard){
         repository.addCryptoCard(cryptoCard)
     }
 }

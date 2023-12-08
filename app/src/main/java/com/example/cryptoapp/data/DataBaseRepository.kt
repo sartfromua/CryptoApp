@@ -1,0 +1,38 @@
+package com.example.cryptoapp.data
+
+import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import com.example.cryptoapp.domain.CryptoCard
+import com.example.cryptoapp.domain.CryptoCardsRepository
+
+class DataBaseRepository(context: Context): CryptoCardsRepository {
+
+    private val dao = CryptoCardDB.getInstance(context).getDao()
+
+    override suspend fun addCryptoCard(cryptoCard: CryptoCard) {
+        dao.addCryptoCard(CryptoCardMapper.cryptoCardToEntity(cryptoCard))
+    }
+
+    override suspend fun getCryptoCard(name: String): CryptoCard {
+        val entity = dao.getCryptoCard(name)
+        return CryptoCardMapper.entityToCryptoCard(entity)
+    }
+
+    override fun getCryptoCardsList(): LiveData<List<CryptoCard>> {
+        return MediatorLiveData<List<CryptoCard>>().apply {
+            addSource(dao.getCryptoCardsList()) {
+                value = CryptoCardMapper.entitiesToShopItem(it)
+            }
+        }
+    }
+
+    override suspend fun editCryptoCard(cryptoCard: CryptoCard) {
+        dao.editCryptoCard(CryptoCardMapper.cryptoCardToEntity(cryptoCard))
+    }
+
+    override suspend fun removeCryptoCard(cryptoCard: CryptoCard) {
+        dao.removeCryptoCard(CryptoCardMapper.cryptoCardToEntity(cryptoCard))
+    }
+
+}

@@ -1,15 +1,12 @@
 package com.example.cryptoapp.presentation
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.EXTRA_CRYPTO_NAME
-import com.example.cryptoapp.LOG_TAG
-import com.example.cryptoapp.R
 import com.example.cryptoapp.UNDEFINED_CRYPTO_NAME
 import com.example.cryptoapp.databinding.FragmentMoreInfoBinding
 
@@ -61,7 +58,7 @@ class MoreInfoFragment : Fragment() {
                 textMaxPriceTodayView.text = it.maxToday.toString()
                 textMinPriceTodayView.text = it.minToday.toString()
                 textPriceView.text = it.priceUSD.toString()
-                textDateUpdatedView.text = it.updatedDate.toString()
+                textDateUpdatedView.text = it.lastUpdated.toString()
             }
 
             viewModel.finishActivityLD.observe(viewLifecycleOwner) {

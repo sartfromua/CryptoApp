@@ -6,7 +6,7 @@ import com.example.cryptoapp.domain.CryptoCardsRepository
 class EditCryptoCard (
     private var repository: CryptoCardsRepository
 ) {
-    fun editCryptoCard(cryptoCard: CryptoCard){
+    suspend fun editCryptoCard(cryptoCard: CryptoCard){
         repository.editCryptoCard(cryptoCard)
     }
 }

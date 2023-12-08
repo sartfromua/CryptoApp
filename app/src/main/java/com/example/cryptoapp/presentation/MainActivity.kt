@@ -42,6 +42,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //repoImpl()
+    }
+
+    private fun repoImpl() {
+//        viewModel.addShopItem(
+//            CryptoCard("LTC", 5.0, "UAH", 170.0, 5.4, 4.9, "moment ago")
+//        )
+//        viewModel.addShopItem(
+//            CryptoCard("ETH", 1900.0, "UAH", 65000.0, 6400.9, 6500.0, "10 min ago")
+//        )
+//        viewModel.addShopItem(
+//            CryptoCard("USDT", 1.03, "UAH", 37.0, 36.9, 38.0, "1 hour ago")
+//        )
     }
 
     private fun launchMoreInfoActivity(cryptoName: String) {

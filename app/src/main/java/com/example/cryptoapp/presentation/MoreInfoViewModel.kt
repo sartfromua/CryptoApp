@@ -4,13 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.cryptoapp.data.CryptoCardRepositoryImpl
+import androidx.lifecycle.viewModelScope
+import com.example.cryptoapp.data.DataBaseRepository
 import com.example.cryptoapp.domain.CryptoCard
 import com.example.cryptoapp.domain.Usecase.EditCryptoCard
 import com.example.cryptoapp.domain.Usecase.GetCryptoCard
+import kotlinx.coroutines.launch
 
 class MoreInfoViewModel(application: Application): AndroidViewModel(application) {
-    private val repository = CryptoCardRepositoryImpl
+    private val repository = DataBaseRepository(application)
 
     private val getCryptoCardUseCase = GetCryptoCard(repository)
     private val editCryptoCard = EditCryptoCard(repository)
@@ -26,7 +28,9 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
 
 
     fun getCard(name: String) {
-        _cardLiveData.value = getCryptoCardUseCase.getCryptoCard(name)
+        viewModelScope.launch {
+            _cardLiveData.value = getCryptoCardUseCase.getCryptoCard(name)
+        }
     }
 
 }

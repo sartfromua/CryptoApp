@@ -1,0 +1,70 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "882cebaf44665e08338f224c888c97fc",
+    "entities": [
+      {
+        "tableName": "cards_table",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name_card` TEXT NOT NULL, `price_USD` REAL NOT NULL, `second_currency_name` TEXT NOT NULL, `price_second` REAL NOT NULL, `min_price_today` REAL NOT NULL, `max_price_today` REAL NOT NULL, `last_updated` TEXT NOT NULL, PRIMARY KEY(`name_card`))",
+        "fields": [
+          {
+            "fieldPath": "name",
+            "columnName": "name_card",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "priceUSD",
+            "columnName": "price_USD",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondCurrencyName",
+            "columnName": "second_currency_name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "secondPrice",
+            "columnName": "price_second",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "minToday",
+            "columnName": "min_price_today",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "maxToday",
+            "columnName": "max_price_today",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lastUpdated",
+            "columnName": "last_updated",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "name_card"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '882cebaf44665e08338f224c888c97fc')"
+    ]
+  }
+}
