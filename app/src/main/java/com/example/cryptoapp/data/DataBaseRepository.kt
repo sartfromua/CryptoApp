@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import com.example.cryptoapp.domain.CryptoCard
 import com.example.cryptoapp.domain.CryptoCardsRepository
+import com.example.cryptoapp.domain.CurrencyNames
 
 class DataBaseRepository(context: Context): CryptoCardsRepository {
 
@@ -33,6 +34,14 @@ class DataBaseRepository(context: Context): CryptoCardsRepository {
 
     override suspend fun removeCryptoCard(cryptoCard: CryptoCard) {
         dao.removeCryptoCard(CryptoCardMapper.cryptoCardToEntity(cryptoCard))
+    }
+
+    override suspend fun getCurrencyNamesList(): CurrencyNames {
+        val names = CurrencyNames()
+        names.namesList.apply {
+            addAll(dao.getCurrencyNamesList())
+        }
+        return names
     }
 
 }

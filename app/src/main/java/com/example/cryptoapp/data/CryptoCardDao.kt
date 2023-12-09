@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.cryptoapp.domain.CurrencyNames
 
 @Dao
 interface CryptoCardDao {
@@ -23,6 +24,9 @@ interface CryptoCardDao {
     @Query("SELECT * FROM cards_table ORDER BY name_card ASC")
     fun getCryptoCardsList(): LiveData<List<CryptoCardEntity>>
 
+    @Query("SELECT name_card FROM cards_table")
+    suspend fun getCurrencyNamesList(): List<String>
+
     @Delete
-    suspend fun removeCryptoCard(card: CryptoCardEntity)
+    fun removeCryptoCard(card: CryptoCardEntity)
 }

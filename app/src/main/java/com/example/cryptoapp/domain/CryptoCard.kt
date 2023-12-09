@@ -3,8 +3,7 @@ package com.example.cryptoapp.domain
 class CryptoCard (
     val name: String,
     val priceUSD: Double,
-    val secondCurrencyName: String,
-    val secondPrice: Double,
+    val priceUAH: Double,
     val minToday: Double,
     val maxToday: Double,
     val lastUpdated: String

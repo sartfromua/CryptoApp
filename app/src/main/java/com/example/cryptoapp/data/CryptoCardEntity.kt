@@ -14,11 +14,8 @@ data class CryptoCardEntity (
     @ColumnInfo(name="price_USD")
     val priceUSD: Double,
 
-    @ColumnInfo(name="second_currency_name")
-    val secondCurrencyName: String,
-
     @ColumnInfo(name="price_second")
-    val secondPrice: Double,
+    val priceUAH: Double,
 
     @ColumnInfo(name="min_price_today")
     val minToday: Double,

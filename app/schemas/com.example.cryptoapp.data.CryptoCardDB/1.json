@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "882cebaf44665e08338f224c888c97fc",
+    "identityHash": "de854726c09222710d375b8796152c88",
     "entities": [
       {
         "tableName": "cards_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name_card` TEXT NOT NULL, `price_USD` REAL NOT NULL, `second_currency_name` TEXT NOT NULL, `price_second` REAL NOT NULL, `min_price_today` REAL NOT NULL, `max_price_today` REAL NOT NULL, `last_updated` TEXT NOT NULL, PRIMARY KEY(`name_card`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name_card` TEXT NOT NULL, `price_USD` REAL NOT NULL, `price_second` REAL NOT NULL, `min_price_today` REAL NOT NULL, `max_price_today` REAL NOT NULL, `last_updated` TEXT NOT NULL, PRIMARY KEY(`name_card`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -21,13 +21,7 @@
             "notNull": true
           },
           {
-            "fieldPath": "secondCurrencyName",
-            "columnName": "second_currency_name",
-            "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "secondPrice",
+            "fieldPath": "priceUAH",
             "columnName": "price_second",
             "affinity": "REAL",
             "notNull": true
@@ -64,7 +58,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '882cebaf44665e08338f224c888c97fc')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'de854726c09222710d375b8796152c88')"
     ]
   }
 }

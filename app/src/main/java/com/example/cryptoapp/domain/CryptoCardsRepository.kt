@@ -8,4 +8,5 @@ interface CryptoCardsRepository {
     fun getCryptoCardsList(): LiveData<List<CryptoCard>>
     suspend fun editCryptoCard(cryptoCard: CryptoCard)
     suspend fun removeCryptoCard(cryptoCard: CryptoCard)
+    suspend fun getCurrencyNamesList(): CurrencyNames
 }

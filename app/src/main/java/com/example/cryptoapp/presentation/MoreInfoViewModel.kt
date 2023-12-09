@@ -15,7 +15,7 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
     private val repository = DataBaseRepository(application)
 
     private val getCryptoCardUseCase = GetCryptoCard(repository)
-    private val editCryptoCard = EditCryptoCard(repository)
+    private val editCryptoCardUseCase = EditCryptoCard(repository)
 
     private val _cardLiveData = MutableLiveData<CryptoCard>()
     val cardLiveData: LiveData<CryptoCard>
@@ -25,7 +25,11 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
     val finishActivityLD: LiveData<Unit>
         get() = _finishActivityLD
 
-
+    fun ediCard(card: CryptoCard) {
+        viewModelScope.launch {
+            editCryptoCardUseCase.editCryptoCard(card)
+        }
+    }
 
     fun getCard(name: String) {
         viewModelScope.launch {

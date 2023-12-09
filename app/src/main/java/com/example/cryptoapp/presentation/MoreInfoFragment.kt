@@ -42,14 +42,25 @@ class MoreInfoFragment : Fragment() {
 
         viewModel = ViewModelProvider(this)[MoreInfoViewModel::class.java]
 
-//        initView()
+        initViews()
         setupMode()
         registerLiveData()
+    }
+
+    private fun initViews() {
+        binding.buttonUpdate.setOnClickListener {
+
+            //updateURL()
+        }
     }
 
     private fun setupMode() {
         viewModel.getCard(cardName)
     }
+
+//    private fun getCurrencyList(): List<String> {
+//
+//    }
 
     private fun registerLiveData() {
         with (binding) {
@@ -57,6 +68,7 @@ class MoreInfoFragment : Fragment() {
                 textNameView.text = it.name
                 textMaxPriceTodayView.text = it.maxToday.toString()
                 textMinPriceTodayView.text = it.minToday.toString()
+                textPriceChangeView.text = it.priceUAH.toString()
                 textPriceView.text = it.priceUSD.toString()
                 textDateUpdatedView.text = it.lastUpdated.toString()
             }

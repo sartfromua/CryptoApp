@@ -7,8 +7,7 @@ object CryptoCardMapper {
         return CryptoCard(
             entity.name,
             entity.priceUSD,
-            entity.secondCurrencyName,
-            entity.secondPrice,
+            entity.priceUAH,
             entity.minToday,
             entity.maxToday,
             entity.lastUpdated
@@ -19,8 +18,7 @@ object CryptoCardMapper {
         return CryptoCardEntity(
             card.name,
             card.priceUSD,
-            card.secondCurrencyName,
-            card.secondPrice,
+            card.priceUAH,
             card.minToday,
             card.maxToday,
             card.lastUpdated

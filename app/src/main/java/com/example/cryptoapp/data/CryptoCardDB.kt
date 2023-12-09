@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 abstract class CryptoCardDB: RoomDatabase() {
     abstract fun getDao(): CryptoCardDao
 
-    companion object{
+    companion object {
         // Singleton prevents multiple instances of database opening at the
         // same time.
         private var INSTANCE: CryptoCardDB? = null
@@ -22,7 +22,7 @@ abstract class CryptoCardDB: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     CryptoCardDB::class.java,
-                    "word_database"
+                    "card_database"
                 ).build()
                 INSTANCE = instance
                 // return instance
@@ -30,5 +30,4 @@ abstract class CryptoCardDB: RoomDatabase() {
             }
         }
     }
-
 }
