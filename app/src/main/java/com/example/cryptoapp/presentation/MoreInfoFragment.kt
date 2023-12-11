@@ -9,13 +9,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.EXTRA_CRYPTO_NAME
+import com.example.cryptoapp.MEDIA_BASE_URL
 import com.example.cryptoapp.UNDEFINED_CRYPTO_NAME
 import com.example.cryptoapp.databinding.FragmentMoreInfoBinding
+import com.squareup.picasso.Picasso
 import java.time.Clock
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.microseconds
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.nanoseconds
+import kotlin.time.Duration.Companion.seconds
 
 class MoreInfoFragment : Fragment() {
 
@@ -31,7 +34,6 @@ class MoreInfoFragment : Fragment() {
     ): View {
         binding = FragmentMoreInfoBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +59,6 @@ class MoreInfoFragment : Fragment() {
     private fun initViews() {
         binding.buttonUpdate.setOnClickListener {
 
-            //updateURL()
         }
     }
 
@@ -65,27 +66,32 @@ class MoreInfoFragment : Fragment() {
         viewModel.getCard(cardName)
     }
 
-//    private fun getCurrencyList(): List<String> {
-//
-//    }
-
     @SuppressLint("SetTextI18n")
     private fun registerLiveData() {
         with (binding) {
             viewModel.cardLiveData.observe(viewLifecycleOwner) {
-                textNameView.text = it.name
-                textMaxPriceTodayView.text = it.maxToday.toString()
-                textMinPriceTodayView.text = it.minToday.toString()
-                textPriceChangeView.text = it.priceUAH.toString()
-                textPriceView.text = it.priceUSD.toString()
-                textDateUpdatedView.text = (SystemClock.elapsedRealtime() - it.lastUpdated).milliseconds.inWholeSeconds.toString() +
-                        " seconds ago"
+                textNameView.text = it.name + "/USD"
+                textMaxPriceTodayView.text = "Max price in 24 hour: \n" + it.maxToday.toString()
+                textMinPriceTodayView.text = "Min price in 24 hour: \n" + it.minToday.toString()
+                textPriceView.text = "Price: \n" + it.priceUSD.toString()
+                textMarket.text = "Market: \n" + it.market
+                textDateUpdatedView.text = "Last updated: \n" + lastUpdatedToString(it.lastUpdated)
+                Picasso.get().load(MEDIA_BASE_URL+it.imageUrl).into(cryptoLogo)
             }
+
 
             viewModel.finishActivityLD.observe(viewLifecycleOwner) {
                 activity?.onBackPressed()
             }
         }
+    }
+
+    private fun lastUpdatedToString(lastUpdated: Long): String {
+        val seconds = (SystemClock.elapsedRealtime() - lastUpdated).milliseconds.inWholeSeconds
+        return if (seconds < 60) "$seconds seconds ago"
+        else if  (seconds in 60..<3600) "${seconds.seconds.inWholeMinutes} minutes ago"
+        else if (seconds in 3600..<3600*24) "${seconds.seconds.inWholeHours} hours ago"
+        else "${seconds.seconds.inWholeDays} days ago"
     }
 
 

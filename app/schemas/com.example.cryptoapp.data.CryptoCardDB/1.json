@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "c4ac75ef5507a3673bcf8509db0a0698",
+    "identityHash": "f6c5fb0fc0f0caf132c5e48a05b85b05",
     "entities": [
       {
         "tableName": "cards_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name_card` TEXT NOT NULL, `price_USD` REAL NOT NULL, `price_second` REAL NOT NULL, `min_price_today` REAL NOT NULL, `max_price_today` REAL NOT NULL, `last_updated` INTEGER NOT NULL, PRIMARY KEY(`name_card`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name_card` TEXT NOT NULL, `price_USD` REAL NOT NULL, `min_price_today` REAL NOT NULL, `max_price_today` REAL NOT NULL, `market` TEXT NOT NULL, `last_updated` INTEGER NOT NULL, `image_URL` TEXT NOT NULL, PRIMARY KEY(`name_card`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -17,12 +17,6 @@
           {
             "fieldPath": "priceUSD",
             "columnName": "price_USD",
-            "affinity": "REAL",
-            "notNull": true
-          },
-          {
-            "fieldPath": "priceUAH",
-            "columnName": "price_second",
             "affinity": "REAL",
             "notNull": true
           },
@@ -39,9 +33,21 @@
             "notNull": true
           },
           {
+            "fieldPath": "market",
+            "columnName": "market",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
             "fieldPath": "lastUpdated",
             "columnName": "last_updated",
             "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "imageURL",
+            "columnName": "image_URL",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -58,7 +64,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c4ac75ef5507a3673bcf8509db0a0698')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f6c5fb0fc0f0caf132c5e48a05b85b05')"
     ]
   }
 }

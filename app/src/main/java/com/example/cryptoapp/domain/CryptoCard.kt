@@ -5,10 +5,11 @@ import com.example.cryptoapp.UNDEFINED
 class CryptoCard(
     val name: String = "",
     val priceUSD: Double = UNDEFINED,
-    val priceUAH: Double = UNDEFINED,
     val minToday: Double = UNDEFINED,
     val maxToday: Double = UNDEFINED,
-    val lastUpdated: Long = 0
+    val market: String = "",
+    val lastUpdated: Long = 0,
+    val imageUrl: String = ""
 ){
 
     override fun toString(): String {

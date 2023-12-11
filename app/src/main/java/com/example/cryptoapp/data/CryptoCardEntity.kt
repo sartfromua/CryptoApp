@@ -14,16 +14,19 @@ data class CryptoCardEntity(
     @ColumnInfo(name="price_USD")
     val priceUSD: Double,
 
-    @ColumnInfo(name="price_second")
-    val priceUAH: Double,
-
     @ColumnInfo(name="min_price_today")
     val minToday: Double,
 
     @ColumnInfo(name="max_price_today")
     val maxToday: Double,
 
+    @ColumnInfo(name="market")
+    val market: String,
+
     @ColumnInfo(name="last_updated")
-    val lastUpdated: Long
+    val lastUpdated: Long,
+
+    @ColumnInfo(name="image_URL")
+    val imageURL: String
 
 )

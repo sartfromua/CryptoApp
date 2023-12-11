@@ -6,16 +6,18 @@ import android.os.Bundle
 import android.os.SystemClock
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cryptoapp.EXTRA_CRYPTO_NAME
 import com.example.cryptoapp.LOG_TAG
+import com.example.cryptoapp.R
 import com.example.cryptoapp.databinding.ActivityMainBinding
 import com.example.cryptoapp.domain.CryptoCard
 import com.example.cryptoapp.domain.CurrencyNames
-import com.example.cryptoapp.presentation.retrofit.CryptoDataResponse
-import com.example.cryptoapp.presentation.retrofit.ResponseCryptoCardMapper
-import com.example.cryptoapp.presentation.retrofit.RetrofitCommon
+import com.example.cryptoapp.domain.retrofit.CryptoDataResponse
+import com.example.cryptoapp.domain.retrofit.ResponseCryptoCardMapper
+import com.example.cryptoapp.domain.retrofit.RetrofitCommon
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -58,69 +60,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.currencyNamesList.observe(this) {
-            names = it
-        }
-
+        // RefreshButton with retrofit
         binding.refreshButton.setOnClickListener {
             try {
-                updateCryptoCards()
+                viewModel.updateCryptoCards()
             } catch (e: Exception) {
                 Log.d(LOG_TAG, "Error in updatingCryptoCards\n" + e.message)
             }
         }
         }
 
-    private fun updateCryptoCards() {
-        viewModel.getCurrencyNamesList()
-//        Log.d(LOG_TAG, names.namesList.toString())
-        if (names.namesList != emptyList<String>()) {
-            val call = RetrofitCommon.retrofitService
-                .getCryptoList(names.namesList.joinToString(","), "USD,UAH")
-
-            call.enqueue(object : Callback<CryptoDataResponse> {
-                override fun onResponse(call: Call<CryptoDataResponse>, response: Response<CryptoDataResponse>) {
-                    if (response.isSuccessful) {
-                        Log.d(LOG_TAG, "onResponse:")
-                        Log.d(LOG_TAG, response.toString())
-                        Log.d(LOG_TAG, response.body().toString())
-
-                        Log.d(LOG_TAG, "NamesList: ${names.namesList}")
-                        for (cardName in names.namesList) {
-
-                            val card: CryptoCard =
-                                ResponseCryptoCardMapper.responseToCard(
-                                    cardName = cardName,
-                                    lastUpdated = SystemClock.elapsedRealtimeNanos(),
-                                    response = response.body()!!
-                                )
-
-                            viewModel.editCryptoCard(card)
-                        }
-
-                    } else {
-                        Log.d(LOG_TAG, "Error in onResponse")
-                    }
-                }
-
-                override fun onFailure(call: Call<CryptoDataResponse>, t: Throwable) {
-                    Log.d(LOG_TAG, "Error in Call")
-                    Log.d(LOG_TAG, t.toString())
-                }
-            })
-            Log.d(
-                LOG_TAG,
-                call.toString()
-            )
-        }
-    }
-
     private fun repoImpl() {
         viewModel.addCryptoCard(CryptoCard("BTC"))
         viewModel.addCryptoCard(CryptoCard("LTC"))
         viewModel.addCryptoCard(CryptoCard("ETH"))
         viewModel.addCryptoCard(
-            CryptoCard("USDT", 1.03,  37.0, 36.9, 38.0, 0)
+            CryptoCard("USDT")
         )
     }
 

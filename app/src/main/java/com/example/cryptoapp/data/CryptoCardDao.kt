@@ -21,7 +21,7 @@ interface CryptoCardDao {
     @Query("SELECT * FROM cards_table WHERE name_card ==:cardName LIMIT 1")
     suspend fun getCryptoCard(cardName: String): CryptoCardEntity
 
-    @Query("SELECT * FROM cards_table ORDER BY name_card ASC")
+    @Query("SELECT * FROM cards_table ORDER BY last_updated ASC")
     fun getCryptoCardsList(): LiveData<List<CryptoCardEntity>>
 
     @Query("SELECT name_card FROM cards_table")

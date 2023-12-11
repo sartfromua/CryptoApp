@@ -8,7 +8,7 @@
     tools:context=".presentation.MoreInfoFragment">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/cryptoLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="40dp"
@@ -27,7 +27,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/cryptoLogo" />
 
         <TextView
             android:id="@+id/textMaxPriceTodayView"
@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textMaxPriceTodayView" />
 
         <TextView
-            android:id="@+id/textPriceChangeView"
+            android:id="@+id/textMarket"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
@@ -77,7 +77,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textPriceChangeView" />
+            app:layout_constraintTop_toBottomOf="@+id/textMarket" />
 
         <Button
             android:id="@+id/buttonUpdate"
@@ -99,5 +99,5 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+            app:layout_constraintTop_toBottomOf="@+id/cryptoLogo" />
 </androidx.constraintlayout.widget.ConstraintLayout>
