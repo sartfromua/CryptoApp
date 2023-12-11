@@ -56,44 +56,43 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun updateCryptoCards() {
         viewModelScope.launch {
             val names = getCurrencyNamesListUseCase.getCurrencyNamesList()
-//        Log.d(LOG_TAG, names.namesList.toString())
+            Log.d(LOG_TAG, names.namesList.toString())
             try {
-                if (names.namesList != emptyList<String>()) {
-                    val call = RetrofitCommon.retrofitService
-                        .getCryptoList(25, "USD")
+                val call = RetrofitCommon.retrofitService
+                    .getCryptoList(25, "USD")
 
-                    call.enqueue(object : Callback<CryptoDataResponse> {
-                        override fun onResponse(
-                            call: Call<CryptoDataResponse>,
-                            response: Response<CryptoDataResponse>
-                        ) {
-                            if (response.isSuccessful) {
-                                Log.d(LOG_TAG, "onResponse:")
-                                Log.d(LOG_TAG, response.toString())
-                                Log.d(LOG_TAG, response.body().toString())
+                call.enqueue(object : Callback<CryptoDataResponse> {
+                    override fun onResponse(
+                        call: Call<CryptoDataResponse>,
+                        response: Response<CryptoDataResponse>
+                    ) {
+                        if (response.isSuccessful) {
+                            Log.d(LOG_TAG, "onResponse:")
+                            Log.d(LOG_TAG, response.toString())
+                            Log.d(LOG_TAG, response.body().toString())
 
-                                Log.d(LOG_TAG, "NamesList: ${names.namesList}")
-                                val cards: List<CryptoCard> = ResponseCryptoCardMapper
-                                    .responseToCards(response = response.body()!!)
-                                for (card in cards)
-                                    if (card.name in names.namesList)
-                                        editCryptoCard(card)
-                                    else
-                                        addCryptoCard(card)
+                            Log.d(LOG_TAG, "NamesList: ${names.namesList}")
+                            val cards: List<CryptoCard> = ResponseCryptoCardMapper
+                                .responseToCards(response = response.body()!!)
+                            for (card in cards)
+                                if (card.name in names.namesList)
+                                    editCryptoCard(card)
+                                else
+                                    addCryptoCard(card)
 
-                            } else {
-                                Log.d(LOG_TAG, "Error in onResponse")
-                            }
+                        } else {
+                            Log.d(LOG_TAG, "Error in onResponse")
                         }
+                    }
 
-                        override fun onFailure(call: Call<CryptoDataResponse>, t: Throwable) {
-                            Log.d(LOG_TAG, "Error in Call")
-                            Log.d(LOG_TAG, call.toString())
-                            Log.d(LOG_TAG, t.message.toString())
-                        }
-                    })
-                    Log.d(LOG_TAG, call.toString())
-                }
+                    override fun onFailure(call: Call<CryptoDataResponse>, t: Throwable) {
+                        Log.d(LOG_TAG, "Error in Call")
+                        Log.d(LOG_TAG, call.toString())
+                        Log.d(LOG_TAG, t.message.toString())
+                    }
+                })
+                Log.d(LOG_TAG, call.toString())
+
             } catch (e: Exception) {
                 Log.d(LOG_TAG, e.message.toString())
             }

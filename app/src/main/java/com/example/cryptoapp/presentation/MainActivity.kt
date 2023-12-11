@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
 
     lateinit var binding: ActivityMainBinding
+    val isPortrait: Boolean
+        get() = binding.fragmentContainerLandscape == null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,6 @@ class MainActivity : AppCompatActivity() {
 //        repoImpl()
     }
 
-    var names: CurrencyNames = CurrencyNames()
     private fun initViews() {
         //ViewModel
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
@@ -54,7 +55,12 @@ class MainActivity : AppCompatActivity() {
 
         adapter.clickListener = { view: View, card: CryptoCard ->
             try {
-                launchMoreInfoActivity(card.name)
+                if (isPortrait)
+                    launchMoreInfoActivity(card.name)
+                else {
+                    setupFragment(MoreInfoFragment.newInstanceFragmentMoreInfo(card.name))
+
+                }
             } catch (e: Exception) {
                 Log.d(LOG_TAG, "Failed to launch MoreInfoActivity!")
             }
@@ -63,12 +69,20 @@ class MainActivity : AppCompatActivity() {
         // RefreshButton with retrofit
         binding.refreshButton.setOnClickListener {
             try {
+                Log.d(LOG_TAG, "Refresh_Button")
                 viewModel.updateCryptoCards()
             } catch (e: Exception) {
                 Log.d(LOG_TAG, "Error in updatingCryptoCards\n" + e.message)
             }
         }
-        }
+    }
+
+    private fun setupFragment(fragment: MoreInfoFragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragmentContainerLandscape, fragment)
+            .commit()
+    }
 
     private fun repoImpl() {
         viewModel.addCryptoCard(CryptoCard("BTC"))

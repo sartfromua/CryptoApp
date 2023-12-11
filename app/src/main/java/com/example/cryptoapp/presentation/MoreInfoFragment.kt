@@ -14,6 +14,7 @@ import com.example.cryptoapp.UNDEFINED_CRYPTO_NAME
 import com.example.cryptoapp.databinding.FragmentMoreInfoBinding
 import com.squareup.picasso.Picasso
 import java.time.Clock
+import kotlin.concurrent.fixedRateTimer
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.microseconds
 import kotlin.time.Duration.Companion.milliseconds
@@ -44,6 +45,12 @@ class MoreInfoFragment : Fragment() {
                 cardName = getString(EXTRA_CRYPTO_NAME) ?: UNDEFINED_CRYPTO_NAME
             } else throw IllegalArgumentException("No EXTRA_CRYPTO_NAME in arguments for fragment!")
         }
+
+        fixedRateTimer("timer", false, 0L, 1000) {
+             {
+
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,18 +59,14 @@ class MoreInfoFragment : Fragment() {
         viewModel = ViewModelProvider(this)[MoreInfoViewModel::class.java]
 
         initViews()
-        setupMode()
         registerLiveData()
     }
 
     private fun initViews() {
+        viewModel.getCard(cardName)
         binding.buttonUpdate.setOnClickListener {
 
         }
-    }
-
-    private fun setupMode() {
-        viewModel.getCard(cardName)
     }
 
     @SuppressLint("SetTextI18n")
@@ -77,6 +80,11 @@ class MoreInfoFragment : Fragment() {
                 textMarket.text = "Market: \n" + it.market
                 textDateUpdatedView.text = "Last updated: \n" + lastUpdatedToString(it.lastUpdated)
                 Picasso.get().load(MEDIA_BASE_URL+it.imageUrl).into(cryptoLogo)
+                fixedRateTimer(period = 1000) {
+                    activity?.runOnUiThread{
+                        textDateUpdatedView.text = "Last updated: \n" + lastUpdatedToString(it.lastUpdated)
+                    }
+                }
             }
 
 
