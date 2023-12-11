@@ -22,7 +22,7 @@ abstract class CryptoCardDB: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     CryptoCardDB::class.java,
-                    "card_database"
+                    "card_database_v2"
                 ).build()
                 INSTANCE = instance
                 // return instance

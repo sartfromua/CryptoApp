@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 
 @Entity(tableName = "cards_table")
-data class CryptoCardEntity (
+data class CryptoCardEntity(
     @PrimaryKey
     @ColumnInfo(name="name_card")
     var name: String,
@@ -24,6 +24,6 @@ data class CryptoCardEntity (
     val maxToday: Double,
 
     @ColumnInfo(name="last_updated")
-    val lastUpdated: String
+    val lastUpdated: Long
 
 )

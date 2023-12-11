@@ -1,7 +1,6 @@
 package com.example.cryptoapp.presentation
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,6 +9,8 @@ import com.example.cryptoapp.data.DataBaseRepository
 import com.example.cryptoapp.domain.CryptoCard
 import com.example.cryptoapp.domain.CurrencyNames
 import com.example.cryptoapp.domain.Usecase.AddCryptoCard
+import com.example.cryptoapp.domain.Usecase.EditCryptoCard
+import com.example.cryptoapp.domain.Usecase.GetCryptoCard
 import com.example.cryptoapp.domain.Usecase.GetCryptoCardsList
 import com.example.cryptoapp.domain.Usecase.GetCurrencyNamesList
 import com.example.cryptoapp.domain.Usecase.RemoveCryptoCard
@@ -22,6 +23,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     private val removeCryptoCardUseCase = RemoveCryptoCard(repository)
     private val addCryptoCardUseCase = AddCryptoCard(repository)
     private val getCurrencyNamesListUseCase = GetCurrencyNamesList(repository)
+    private val editCryptoCardUseCase = EditCryptoCard(repository)
+
 
     val livedata: LiveData<List<CryptoCard>>
         get() = getCryptoCardsListUseCase.getCryptoCardsList()
@@ -33,7 +36,6 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     }
 
     private var _currencyNamesList = MutableLiveData<CurrencyNames>()
-
     val currencyNamesList: LiveData<CurrencyNames>
         get() = _currencyNamesList
 
@@ -45,11 +47,13 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-//    suspend fun getCurrencyNamesList(): List<String> {
-//        return getCurrencyNamesListUseCase.getCurrencyNamesList()
-//    }
+    fun editCryptoCard(card: CryptoCard) {
+        viewModelScope.launch {
+            editCryptoCardUseCase.editCryptoCard(card)
+        }
+    }
 
-    fun addShopItem(card: CryptoCard) {
+    fun addCryptoCard(card: CryptoCard) {
         viewModelScope.launch {
             addCryptoCardUseCase.addCryptoCard(card)
         }

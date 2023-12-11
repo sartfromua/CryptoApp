@@ -1,6 +1,8 @@
 package com.example.cryptoapp.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.SystemClock
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.EXTRA_CRYPTO_NAME
 import com.example.cryptoapp.UNDEFINED_CRYPTO_NAME
 import com.example.cryptoapp.databinding.FragmentMoreInfoBinding
+import java.time.Clock
+import kotlin.time.Duration
+import kotlin.time.Duration.Companion.microseconds
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.nanoseconds
 
 class MoreInfoFragment : Fragment() {
 
@@ -62,6 +69,7 @@ class MoreInfoFragment : Fragment() {
 //
 //    }
 
+    @SuppressLint("SetTextI18n")
     private fun registerLiveData() {
         with (binding) {
             viewModel.cardLiveData.observe(viewLifecycleOwner) {
@@ -70,7 +78,8 @@ class MoreInfoFragment : Fragment() {
                 textMinPriceTodayView.text = it.minToday.toString()
                 textPriceChangeView.text = it.priceUAH.toString()
                 textPriceView.text = it.priceUSD.toString()
-                textDateUpdatedView.text = it.lastUpdated.toString()
+                textDateUpdatedView.text = (SystemClock.elapsedRealtime() - it.lastUpdated).milliseconds.inWholeSeconds.toString() +
+                        " seconds ago"
             }
 
             viewModel.finishActivityLD.observe(viewLifecycleOwner) {

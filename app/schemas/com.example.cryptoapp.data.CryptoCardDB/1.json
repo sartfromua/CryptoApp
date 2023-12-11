@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "de854726c09222710d375b8796152c88",
+    "identityHash": "c4ac75ef5507a3673bcf8509db0a0698",
     "entities": [
       {
         "tableName": "cards_table",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name_card` TEXT NOT NULL, `price_USD` REAL NOT NULL, `price_second` REAL NOT NULL, `min_price_today` REAL NOT NULL, `max_price_today` REAL NOT NULL, `last_updated` TEXT NOT NULL, PRIMARY KEY(`name_card`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`name_card` TEXT NOT NULL, `price_USD` REAL NOT NULL, `price_second` REAL NOT NULL, `min_price_today` REAL NOT NULL, `max_price_today` REAL NOT NULL, `last_updated` INTEGER NOT NULL, PRIMARY KEY(`name_card`))",
         "fields": [
           {
             "fieldPath": "name",
@@ -41,7 +41,7 @@
           {
             "fieldPath": "lastUpdated",
             "columnName": "last_updated",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": true
           }
         ],
@@ -58,7 +58,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'de854726c09222710d375b8796152c88')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c4ac75ef5507a3673bcf8509db0a0698')"
     ]
   }
 }
