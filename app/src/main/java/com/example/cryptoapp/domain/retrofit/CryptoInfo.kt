@@ -7,5 +7,7 @@ data class CryptoInfo (
     var LOW24HOUR: Double? = null,
     var CONVERSIONLASTUPDATE: Double? = null,
     var IMAGEURL: String? = null,
-    var MARKET: String? = null
+    var MARKET: String? = null,
+    var CHANGEDAY: Double? = null,
+    var CHANGEHOUR: Double? = null
 )

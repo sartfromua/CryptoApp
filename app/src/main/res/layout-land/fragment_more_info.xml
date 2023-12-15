@@ -8,11 +8,38 @@
     tools:context=".presentation.MoreInfoFragment">
 
         <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="57dp"
+            android:layout_height="63dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginBottom="60dp"
+            android:src="@android:drawable/ic_menu_delete"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintStart_toEndOf="@+id/cryptoLogo"
+            app:tint="#000000"
+            tools:ignore="MissingConstraints" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteButton"
+            android:layout_width="55dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="200dp"
+            android:layout_marginBottom="60dp"
+            android:alpha="0"
+            android:clickable="true"
+            android:contentDescription="Deletes card"
+            android:focusable="true"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintStart_toEndOf="@+id/cryptoLogo"
+            tools:alpha="1"
+            tools:ignore="HardcodedText" />
+
+        <ImageView
             android:id="@+id/cryptoLogo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="200dp"
             android:layout_marginTop="40dp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
@@ -21,22 +48,32 @@
             android:id="@+id/textNameView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            tools:text="Name"
+            android:layout_marginStart="30dp"
+            android:layout_marginBottom="60dp"
             android:textSize="24sp"
             android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+            app:layout_constraintStart_toEndOf="@+id/cryptoLogo"
+            tools:text="Name" />
+
+        <Button
+            android:id="@+id/buttonUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="Update"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cryptoLogo" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ScrollView
-            android:id="@+id/scrollView3"
+            android:id="@+id/scrollView2"
             android:layout_width="330dp"
-            android:layout_height="wrap_content"
+            android:layout_height="150dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textNameView">
+            app:layout_constraintTop_toBottomOf="@+id/cryptoLogo">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -107,42 +144,7 @@
                             android:textStyle="bold"
                             tools:text="Updated" />
 
-                        <Button
-                            android:id="@+id/buttonUpdate"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_marginTop="30dp"
-                            android:text="Update" />
-
                 </LinearLayout>
         </ScrollView>
-
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="57dp"
-            android:layout_height="63dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginBottom="20dp"
-            android:src="@android:drawable/ic_menu_delete"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView3"
-            app:layout_constraintStart_toStartOf="parent"
-            app:tint="#000000"
-            tools:ignore="MissingConstraints" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/deleteButton"
-            android:clickable="true"
-            android:contentDescription="Deletes card"
-            android:focusable="true"
-            android:layout_width="55dp"
-            android:layout_height="60dp"
-            android:alpha="0"
-            android:layout_marginStart="40dp"
-            android:layout_marginBottom="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/scrollView3"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:alpha="1"
-            tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

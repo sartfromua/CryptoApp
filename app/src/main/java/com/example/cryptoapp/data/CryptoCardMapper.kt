@@ -11,7 +11,10 @@ object CryptoCardMapper {
             entity.maxToday,
             entity.market,
             entity.lastUpdated,
-            entity.imageURL
+            entity.imageURL,
+            entity.changeDay,
+            entity.changeHour,
+            entity.topPlace
         )
     }
 
@@ -23,7 +26,10 @@ object CryptoCardMapper {
             card.maxToday,
             card.market,
             card.lastUpdated,
-            card.imageUrl
+            card.imageUrl,
+            card.changeDay,
+            card.changeHour,
+            card.topPlace
         )
     }
 

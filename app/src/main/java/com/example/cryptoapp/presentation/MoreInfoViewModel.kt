@@ -9,6 +9,7 @@ import com.example.cryptoapp.data.DataBaseRepository
 import com.example.cryptoapp.domain.CryptoCard
 import com.example.cryptoapp.domain.Usecase.EditCryptoCard
 import com.example.cryptoapp.domain.Usecase.GetCryptoCard
+import com.example.cryptoapp.domain.Usecase.RemoveCryptoCard
 import kotlinx.coroutines.launch
 
 class MoreInfoViewModel(application: Application): AndroidViewModel(application) {
@@ -16,6 +17,7 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
 
     private val getCryptoCardUseCase = GetCryptoCard(repository)
     private val editCryptoCardUseCase = EditCryptoCard(repository)
+    private val removeCryptoCard = RemoveCryptoCard(repository)
 
     private val _cardLiveData = MutableLiveData<CryptoCard>()
     val cardLiveData: LiveData<CryptoCard>
@@ -25,9 +27,16 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
     val finishActivityLD: LiveData<Unit>
         get() = _finishActivityLD
 
-    fun ediCard(card: CryptoCard) {
+    fun editCard(card: CryptoCard) {
         viewModelScope.launch {
             editCryptoCardUseCase.editCryptoCard(card)
+        }
+    }
+
+    fun removeCard(card: CryptoCard?) {
+        viewModelScope.launch {
+            if (card != null)
+                removeCryptoCard.removeCryptoCard(card)
         }
     }
 

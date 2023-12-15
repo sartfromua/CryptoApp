@@ -1,6 +1,8 @@
 package com.example.cryptoapp.presentation
 
 import android.annotation.SuppressLint
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
 import androidx.fragment.app.Fragment
@@ -12,6 +14,7 @@ import com.example.cryptoapp.EXTRA_CRYPTO_NAME
 import com.example.cryptoapp.MEDIA_BASE_URL
 import com.example.cryptoapp.UNDEFINED_CRYPTO_NAME
 import com.example.cryptoapp.databinding.FragmentMoreInfoBinding
+import com.example.cryptoapp.domain.CryptoCard
 import com.squareup.picasso.Picasso
 import java.time.Clock
 import kotlin.concurrent.fixedRateTimer
@@ -45,12 +48,6 @@ class MoreInfoFragment : Fragment() {
                 cardName = getString(EXTRA_CRYPTO_NAME) ?: UNDEFINED_CRYPTO_NAME
             } else throw IllegalArgumentException("No EXTRA_CRYPTO_NAME in arguments for fragment!")
         }
-
-        fixedRateTimer("timer", false, 0L, 1000) {
-             {
-
-            }
-        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -67,6 +64,12 @@ class MoreInfoFragment : Fragment() {
         binding.buttonUpdate.setOnClickListener {
 
         }
+
+        binding.deleteButton?.setOnClickListener {
+            viewModel.getCard(cardName)
+            viewModel.removeCard(viewModel.cardLiveData.value)
+            activity?.onBackPressed()
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -79,6 +82,13 @@ class MoreInfoFragment : Fragment() {
                 textPriceView.text = "Price: \n" + it.priceUSD.toString()
                 textMarket.text = "Market: \n" + it.market
                 textDateUpdatedView.text = "Last updated: \n" + lastUpdatedToString(it.lastUpdated)
+                textChangeDay.text = "Change day: \n" + it.changeDay.toString()
+                textChangeHour.text = "Change hour: \n" + it.changeHour.toString()
+                if (it.changeDay > 0) textChangeDay.setTextColor(Color.parseColor("#4CAF50")) // green
+                else textChangeDay.setTextColor(Color.parseColor("#F44336")) // red
+                if (it.changeHour > 0) textChangeHour.setTextColor(Color.parseColor("#4CAF50")) // green
+                else textChangeHour.setTextColor(Color.parseColor("#F44336")) // red
+
                 Picasso.get().load(MEDIA_BASE_URL+it.imageUrl).into(cryptoLogo)
                 fixedRateTimer(period = 1000) {
                     activity?.runOnUiThread{

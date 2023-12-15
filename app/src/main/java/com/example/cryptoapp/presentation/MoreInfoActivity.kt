@@ -29,7 +29,7 @@ class MoreInfoActivity : AppCompatActivity() {
     private fun setupFragment(fragment: MoreInfoFragment) {
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.moreInfoFragmentContainer, fragment)
+            .replace(R.id.moreInfoFragmentContainer, fragment)
             .commit()
     }
 

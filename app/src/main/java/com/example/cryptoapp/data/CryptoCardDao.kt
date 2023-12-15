@@ -28,5 +28,5 @@ interface CryptoCardDao {
     suspend fun getCurrencyNamesList(): List<String>
 
     @Delete
-    fun removeCryptoCard(card: CryptoCardEntity)
+    suspend fun removeCryptoCard(card: CryptoCardEntity)
 }

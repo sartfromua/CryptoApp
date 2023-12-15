@@ -43,7 +43,8 @@ class MainActivity : AppCompatActivity() {
         //ViewModel
         viewModel = ViewModelProvider(this)[MainViewModel::class.java]
         viewModel.livedata.observe(this) {
-            adapter.cryptoCards = it
+            adapter.cryptoCards = it.sortedBy { it.topPlace }
+            Log.d(LOG_TAG, it.sortedBy { it.topPlace }.toString())
         }
 
         // RecyclerView

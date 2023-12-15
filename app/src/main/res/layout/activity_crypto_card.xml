@@ -43,11 +43,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="85dp"
                 android:layout_marginTop="30dp"
-                tools:text="Name of crypto"
+                android:textColor="#49454F"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Name of crypto" />
 
             <TextView
                 android:id="@+id/textCryptoExchangeRate"
@@ -57,13 +58,14 @@
                 android:layout_marginTop="70dp"
                 android:layout_marginBottom="55dp"
                 android:fontFamily="sans-serif-condensed"
-                tools:text="Exchange rate: 12345"
+                android:textColor="#49454F"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.952" />
+                app:layout_constraintVertical_bias="0.952"
+                tools:text="Exchange rate: 12345" />
 
             <ImageView
                 android:id="@+id/cryptoLogoSmall"

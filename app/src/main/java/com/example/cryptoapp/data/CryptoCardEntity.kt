@@ -27,6 +27,15 @@ data class CryptoCardEntity(
     val lastUpdated: Long,
 
     @ColumnInfo(name="image_URL")
-    val imageURL: String
+    val imageURL: String,
+
+    @ColumnInfo(name="change_day")
+    val changeDay: Double,
+
+    @ColumnInfo(name="change_hour")
+    val changeHour: Double,
+
+    @ColumnInfo(name="top_place")
+    val topPlace: Int
 
 )

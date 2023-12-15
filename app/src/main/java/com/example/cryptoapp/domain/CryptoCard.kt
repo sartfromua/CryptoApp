@@ -9,10 +9,13 @@ class CryptoCard(
     val maxToday: Double = UNDEFINED,
     val market: String = "",
     val lastUpdated: Long = 0,
-    val imageUrl: String = ""
+    val imageUrl: String = "",
+    val changeDay: Double = UNDEFINED,
+    val changeHour: Double = UNDEFINED,
+    val topPlace: Int = -1
 ){
 
     override fun toString(): String {
-        return "$name: %10f".format(priceUSD)
+        return "$name: %d".format(lastUpdated)
     }
 }
