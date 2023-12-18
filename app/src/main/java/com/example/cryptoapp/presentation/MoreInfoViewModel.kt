@@ -28,12 +28,9 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
     private val editCryptoCardUseCase = EditCryptoCard(repository)
     private val removeCryptoCard = RemoveCryptoCard(repository)
 
-    private var name: String = UNDEFINED_CRYPTO_NAME
-    private var topPlace: Int = -1
-
     private val _cardLiveData = MutableLiveData<CryptoCard>()
     val cardLiveData: LiveData<CryptoCard>
-        get() = getCryptoCardUseCase.getCryptoCard(name)
+        get() = _cardLiveData
 
     private var _finishActivityLD = MutableLiveData<Unit>()
     val finishActivityLD: LiveData<Unit>
@@ -52,12 +49,10 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
         }
     }
 
-    fun setCardParams(name: String, topPlace: Int) {
-        this.name = name
-        this.topPlace = topPlace
-//        viewModelScope.launch {
-//            _cardLiveData.value = getCryptoCardUseCase.getCryptoCard(name)
-//        }
+    fun getCryptoCard(name: String) {
+        viewModelScope.launch {
+            _cardLiveData.value = getCryptoCardUseCase.getCryptoCard(name)
+        }
     }
 
     fun updateCryptoCard() {
@@ -66,7 +61,7 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
                 Log.d(LOG_TAG, "Card in call: " + cardLiveData.value)
                 val call = cardLiveData.value?.let {
                     RetrofitCommon.retrofitService
-                        .getSoloCryptoInfo(name)
+                        .getSoloCryptoInfo(_cardLiveData.value?.name ?: UNDEFINED_CRYPTO_NAME)
                 }
 
                 call?.enqueue(object : Callback<CryptoDataInfoOneCrypto> {
@@ -80,10 +75,13 @@ class MoreInfoViewModel(application: Application): AndroidViewModel(application)
                             Log.d(LOG_TAG, response.body().toString())
 
                             val card: CryptoCard = ResponseCryptoCardMapper
-                                .responseToOneCard(response = response.body()!!, name, topPlace)
+                                .responseToOneCard(response = response.body()!!,
+                                    _cardLiveData.value?.name ?: UNDEFINED_CRYPTO_NAME,
+                                    _cardLiveData.value?.topPlace ?: -1)
 
 
                             editCard(card)
+                            _cardLiveData.value = card
 
                         } else {
                             Log.d(LOG_TAG, "Error in onResponse")

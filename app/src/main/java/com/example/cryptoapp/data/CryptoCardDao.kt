@@ -19,7 +19,7 @@ interface CryptoCardDao {
     suspend fun editCryptoCard(card: CryptoCardEntity)
 
     @Query("SELECT * FROM cards_table WHERE name_card ==:cardName LIMIT 1")
-    fun getCryptoCard(cardName: String): LiveData<CryptoCardEntity>
+    suspend fun getCryptoCard(cardName: String): CryptoCardEntity
 
     @Query("SELECT * FROM cards_table ORDER BY last_updated ASC")
     fun getCryptoCardsList(): LiveData<List<CryptoCardEntity>>

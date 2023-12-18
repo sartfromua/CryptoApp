@@ -22,6 +22,7 @@ import kotlin.time.Duration.Companion.seconds
 class MoreInfoFragment : Fragment() {
 
     private var cardName: String = UNDEFINED_CRYPTO_NAME
+    private var lastUpdated: Long = -1L
     private var isLandscape: Boolean = false
 
     lateinit var binding: FragmentMoreInfoBinding
@@ -57,18 +58,24 @@ class MoreInfoFragment : Fragment() {
     }
 
     private fun initViews() {
-        viewModel.setCardParams(cardName)
+        viewModel.getCryptoCard(cardName)
         binding.buttonUpdate.setOnClickListener {
             viewModel.updateCryptoCard()
         }
 
         binding.deleteButton.setOnClickListener {
-            viewModel.setCardParams(cardName)
+            viewModel.getCryptoCard(cardName)
             viewModel.removeCard(viewModel.cardLiveData.value)
             if (!isLandscape) activity?.onBackPressed()
             else activity?.run {
                 supportFragmentManager.beginTransaction().remove(this@MoreInfoFragment)
                     .commitAllowingStateLoss()
+            }
+        }
+
+        fixedRateTimer(period = 1000) {
+            activity?.runOnUiThread{
+                binding.textDateUpdatedView.text = "Last updated: \n${lastUpdatedToString(lastUpdated)}"
             }
         }
     }
@@ -85,17 +92,13 @@ class MoreInfoFragment : Fragment() {
                 textDateUpdatedView.text = "Last updated: \n" + lastUpdatedToString(it.lastUpdated)
                 textChangeDay.text = "Change day: \n" + it.changeDay.toString()
                 textChangeHour.text = "Change hour: \n" + it.changeHour.toString()
+                lastUpdated = it.lastUpdated
                 if (it.changeDay > 0) textChangeDay.setTextColor(Color.parseColor("#4CAF50")) // green
                 else textChangeDay.setTextColor(Color.parseColor("#F44336")) // red
                 if (it.changeHour > 0) textChangeHour.setTextColor(Color.parseColor("#4CAF50")) // green
                 else textChangeHour.setTextColor(Color.parseColor("#F44336")) // red
 
                 Picasso.get().load(MEDIA_BASE_URL+it.imageUrl).into(cryptoLogo)
-                fixedRateTimer(period = 1000) {
-                    activity?.runOnUiThread{
-                        textDateUpdatedView.text = "Last updated: \n" + lastUpdatedToString(it.lastUpdated)
-                    }
-                }
             }
 
 
