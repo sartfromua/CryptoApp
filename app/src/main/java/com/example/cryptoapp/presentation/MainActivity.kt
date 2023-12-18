@@ -59,8 +59,7 @@ class MainActivity : AppCompatActivity() {
                 if (isPortrait)
                     launchMoreInfoActivity(card.name)
                 else {
-                    setupFragment(MoreInfoFragment.newInstanceFragmentMoreInfo(card.name))
-
+                    setupFragment(MoreInfoFragment.newInstanceFragmentMoreInfo(card.name, !isPortrait))
                 }
             } catch (e: Exception) {
                 Log.d(LOG_TAG, "Failed to launch MoreInfoActivity!")

@@ -1,7 +1,6 @@
 package com.example.cryptoapp.presentation
 
 import android.annotation.SuppressLint
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.os.Bundle
 import android.os.SystemClock
@@ -11,22 +10,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import com.example.cryptoapp.EXTRA_CRYPTO_NAME
+import com.example.cryptoapp.EXTRA_IS_LANDSCAPE_MODE
 import com.example.cryptoapp.MEDIA_BASE_URL
 import com.example.cryptoapp.UNDEFINED_CRYPTO_NAME
 import com.example.cryptoapp.databinding.FragmentMoreInfoBinding
-import com.example.cryptoapp.domain.CryptoCard
 import com.squareup.picasso.Picasso
-import java.time.Clock
 import kotlin.concurrent.fixedRateTimer
-import kotlin.time.Duration
-import kotlin.time.Duration.Companion.microseconds
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.nanoseconds
 import kotlin.time.Duration.Companion.seconds
 
 class MoreInfoFragment : Fragment() {
 
     private var cardName: String = UNDEFINED_CRYPTO_NAME
+    private var isLandscape: Boolean = false
 
     lateinit var binding: FragmentMoreInfoBinding
     private lateinit var viewModel: MoreInfoViewModel
@@ -46,6 +42,7 @@ class MoreInfoFragment : Fragment() {
         with (requireArguments()) {
             if (containsKey(EXTRA_CRYPTO_NAME)) {
                 cardName = getString(EXTRA_CRYPTO_NAME) ?: UNDEFINED_CRYPTO_NAME
+                isLandscape = getBoolean(EXTRA_IS_LANDSCAPE_MODE)
             } else throw IllegalArgumentException("No EXTRA_CRYPTO_NAME in arguments for fragment!")
         }
     }
@@ -60,15 +57,19 @@ class MoreInfoFragment : Fragment() {
     }
 
     private fun initViews() {
-        viewModel.getCard(cardName)
+        viewModel.setCardParams(cardName)
         binding.buttonUpdate.setOnClickListener {
-
+            viewModel.updateCryptoCard()
         }
 
-        binding.deleteButton?.setOnClickListener {
-            viewModel.getCard(cardName)
+        binding.deleteButton.setOnClickListener {
+            viewModel.setCardParams(cardName)
             viewModel.removeCard(viewModel.cardLiveData.value)
-            activity?.onBackPressed()
+            if (!isLandscape) activity?.onBackPressed()
+            else activity?.run {
+                supportFragmentManager.beginTransaction().remove(this@MoreInfoFragment)
+                    .commitAllowingStateLoss()
+            }
         }
     }
 
@@ -99,7 +100,11 @@ class MoreInfoFragment : Fragment() {
 
 
             viewModel.finishActivityLD.observe(viewLifecycleOwner) {
-                activity?.onBackPressed()
+                if (!isLandscape) activity?.onBackPressed()
+                else activity?.run {
+                    supportFragmentManager.beginTransaction().remove(this@MoreInfoFragment)
+                        .commitAllowingStateLoss()
+                }
             }
         }
     }
@@ -115,10 +120,11 @@ class MoreInfoFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstanceFragmentMoreInfo(cardName: String) =
+        fun newInstanceFragmentMoreInfo(cardName: String, isLandscape: Boolean) =
             MoreInfoFragment().apply {
                 arguments = Bundle().apply {
                     putString(EXTRA_CRYPTO_NAME, cardName)
+                    putBoolean(EXTRA_IS_LANDSCAPE_MODE, isLandscape)
                 }
             }
     }

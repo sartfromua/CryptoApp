@@ -35,11 +35,13 @@ class MoreInfoActivity : AppCompatActivity() {
 
 
 
+
+
     private lateinit var cardName: String
     private fun parseIntent() {
         if (intent.hasExtra(EXTRA_CRYPTO_NAME)) {
             val cardName = intent.getStringExtra(EXTRA_CRYPTO_NAME) ?: UNDEFINED_CRYPTO_NAME
-            setupFragment(MoreInfoFragment.newInstanceFragmentMoreInfo(cardName))
+            setupFragment(MoreInfoFragment.newInstanceFragmentMoreInfo(cardName, false))
         } else throw IllegalArgumentException("No crypto name in intent! MoreInfoActivity!")
     }
 }

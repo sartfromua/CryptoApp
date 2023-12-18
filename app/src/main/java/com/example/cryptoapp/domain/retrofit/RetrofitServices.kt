@@ -14,4 +14,9 @@ interface RetrofitServices {
     fun getCryptoList(@Query("limit") limit: Int,
                       @Query("tsym") toSyms: String
     ): Call<CryptoDataResponse>
+
+    @GET("data/pricemultifull")
+    fun getSoloCryptoInfo(@Query("fsyms") fromSyms: String,
+                      @Query("tsyms") toSyms: String = "USD"
+    ): Call<CryptoDataInfoOneCrypto>
 }

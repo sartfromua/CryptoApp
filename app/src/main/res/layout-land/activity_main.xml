@@ -44,6 +44,18 @@
         app:srcCompat="@android:drawable/stat_notify_sync"
         app:tint="#6C6C6C" />
 
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerLandscape"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        tools:context=".presentation.MainActivity"
+        tools:layout="@layout/fragment_more_info" />
+
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="wrap_content"
@@ -53,22 +65,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintGuide_percent="0.5"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <ScrollView
-        android:layout_width="363dp"
-        android:layout_height="409dp"
-        android:layout_marginBottom="20dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/recyclerView"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerLandscape"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:context=".presentation.MainActivity"
-            tools:layout="@layout/fragment_more_info" />
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

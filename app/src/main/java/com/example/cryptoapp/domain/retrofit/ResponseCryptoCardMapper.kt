@@ -30,4 +30,23 @@ object ResponseCryptoCardMapper {
         }
         return cards
     }
+
+    fun responseToOneCard(response: CryptoDataInfoOneCrypto, name: String, topPlace: Int): CryptoCard {
+        var card = CryptoCard()
+        response.RAW[name]?.get("USD")?.let {
+            card =  CryptoCard(
+                name = name,
+                priceUSD = it.PRICE ?: UNDEFINED,
+                minToday = it.LOW24HOUR ?: UNDEFINED,
+                maxToday = it.HIGH24HOUR ?: UNDEFINED,
+                market = it.MARKET ?: "",
+                lastUpdated = SystemClock.elapsedRealtime(),
+                imageUrl = it.IMAGEURL ?: "",
+                changeDay = it.CHANGEDAY ?: UNDEFINED,
+                changeHour = it.CHANGEHOUR ?: UNDEFINED,
+                topPlace = topPlace
+            )
+        }
+        return card
+    }
 }

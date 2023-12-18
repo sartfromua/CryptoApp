@@ -15,9 +15,12 @@ class DataBaseRepository(context: Context): CryptoCardsRepository {
         dao.addCryptoCard(CryptoCardMapper.cryptoCardToEntity(cryptoCard))
     }
 
-    override suspend fun getCryptoCard(name: String): CryptoCard {
-        val entity = dao.getCryptoCard(name)
-        return CryptoCardMapper.entityToCryptoCard(entity)
+    override fun getCryptoCard(name: String): LiveData<CryptoCard> {
+        return MediatorLiveData<CryptoCard>().apply {
+            addSource(dao.getCryptoCard(name)) {
+                value = CryptoCardMapper.entityToCryptoCard(it)
+            }
+        }
     }
 
     override fun getCryptoCardsList(): LiveData<List<CryptoCard>> {
